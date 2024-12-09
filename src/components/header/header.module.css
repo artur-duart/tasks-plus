@@ -60,6 +60,33 @@
   color: #ffffff;
 }
 
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.greeting {
+  background-color: transparent;
+  padding: 16px 32px;
+  color: #0866ff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #0866ff;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  color: #ff4d4f;
+}
+
 @media screen and (max-width: 767px) {
   .header {
     height: auto;
@@ -93,6 +120,15 @@
     font-size: 14px;
     margin-top: 8px;
   }
+
+  .userSection {
+    margin-top: 8px;
+  }
+
+  .greeting {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -105,7 +141,8 @@
     padding: 8px 10px;
   }
 
-  .loginButton {
+  .loginButton,
+  .greeting {
     font-size: 12px;
     padding: 10px 20px;
   }
