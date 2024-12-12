@@ -5,29 +5,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .headerContainer {
-  padding: 0 16px;
   width: 100%;
   max-width: 1440px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.logo {
+  font-size: 32px;
+  color: #0866ff;
+  margin: 0;
+  line-height: 1;
+}
+
 .nav {
   display: flex;
+  align-items: center;
   gap: 52px;
 }
 
 .headerContainer a {
   text-decoration: none;
-}
-
-.logo {
-  color: #0866ff;
-  font-size: 32px;
 }
 
 .dashboardLink {
@@ -36,7 +40,7 @@
   color: #ffffff;
   background-color: #0866ff;
   border-radius: 6px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .dashboardLink:hover {
@@ -60,6 +64,19 @@
   color: #ffffff;
 }
 
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #0866ff;
+  transition: color 0.3s ease;
+}
+
+.logoutButton:hover {
+  color: #ff4d4f;
+}
+
 .userSection {
   display: flex;
   align-items: center;
@@ -67,83 +84,59 @@
 }
 
 .greeting {
-  background-color: transparent;
-  padding: 16px 32px;
+  font-size: 16px;
   color: #0866ff;
   font-weight: 600;
-  font-size: 16px;
 }
 
-.logoutButton {
-  background-color: transparent;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  color: #0866ff;
-  transition: all 0.3s ease;
-}
-
-.logoutButton:hover {
-  color: #ff4d4f;
-}
-
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .header {
-    height: auto;
-    padding: 16px 0;
+    height: 60px;
   }
 
   .headerContainer {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav {
-    flex-direction: column;
-    gap: 16px;
+    padding: 0 12px;
   }
 
   .logo {
     font-size: 24px;
-    margin-bottom: 16px;
   }
 
   .dashboardLink {
     font-size: 14px;
-    padding: 8px 12px;
-    width: 100%;
-    text-align: center;
+    padding: 6px 12px;
   }
 
   .loginButton {
-    padding: 12px 24px;
     font-size: 14px;
-    margin-top: 8px;
-  }
-
-  .userSection {
-    margin-top: 8px;
+    padding: 12px 24px;
   }
 
   .greeting {
-    padding: 12px 24px;
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 480px) {
+  .header {
+    height: 50px;
+  }
+
   .logo {
     font-size: 20px;
   }
 
   .dashboardLink {
     font-size: 12px;
-    padding: 8px 10px;
+    padding: 4px 8px;
   }
 
-  .loginButton,
-  .greeting {
+  .loginButton {
     font-size: 12px;
     padding: 10px 20px;
+  }
+
+  .greeting {
+    font-size: 12px;
   }
 }

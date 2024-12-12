@@ -1,0 +1,146 @@
+.pageContainer {
+  background-color: #f2f4f7;
+  width: 100%;
+  height: calc(100vh - 80px);
+}
+
+.mainContent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sectionForm {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 16px;
+  padding-top: 56px;
+}
+
+.title {
+  color: #1c1e21;
+  margin-bottom: 8px;
+}
+
+.checkboxArea {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+}
+
+.button {
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  background-color: #42b72a;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #36a420;
+}
+
+.divisor {
+  max-width: 1440px;
+  width: 100%;
+  height: 1px;
+  background-color: #d1d5db;
+  border: none;
+  margin: 48px 0;
+  position: relative;
+}
+
+.sectionTask {
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.sectionTask h1 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #1c1e21;
+}
+
+.task {
+  margin-bottom: 16px;
+  line-height: 150%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #000000;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tagContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.tag {
+  background-color: #0866ff;
+  padding: 4px 8px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.shareButton,
+.trashButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
+}
+
+.shareButton:hover,
+.trashButton:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.taskContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+}
+
+.taskContent p {
+  white-space: pre-wrap;
+}
