@@ -3,28 +3,74 @@
 import styles from "./dashboard.module.css";
 import { Textarea } from "@/components/textarea/Textarea";
 import { FaShare, FaTrash } from "react-icons/fa";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { db } from "@/services/fireBaseConnectiont";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import { useSession } from "next-auth/react";
+
+interface TaskProps {
+  id: string;
+  createdAt: Date;
+  public: boolean;
+  task: string;
+  user: string;
+}
 
 export default function Dashboard() {
   const [input, setInput] = useState("");
   const [publicTask, setPublicTask] = useState(false);
+  const [tasks, setTasks] = useState<TaskProps[]>([]);
 
   const { data: session } = useSession();
+  const user = session?.user;
+
+  useEffect(() => {
+    async function loadTasks() {
+      if (!user?.email) return;
+
+      const refTasks = collection(db, "tasks");
+      const q = query(
+        refTasks,
+        orderBy("createdAt", "desc"),
+        where("user", "==", user.email),
+      );
+
+      onSnapshot(q, (snapshot) => {
+        let list = [] as TaskProps[];
+
+        snapshot.forEach((element) => {
+          list.push({
+            id: element.id,
+            task: element.data().task,
+            createdAt: element.data().createdAt,
+            user: element.data().user,
+            public: element.data().public,
+          });
+        });
+
+        setTasks(list);
+      });
+    }
+
+    loadTasks();
+  }, [user?.email]);
 
   async function handleRegisterTask(e: FormEvent) {
     e.preventDefault();
 
     if (input === "") return;
 
-    const user = session?.user;
-
     try {
       await addDoc(collection(db, "tasks"), {
         task: input,
-        created: new Date(),
+        createdAt: new Date(),
         user: user?.email,
         public: publicTask,
       });
@@ -79,27 +125,30 @@ export default function Dashboard() {
           <section className={styles.sectionTask}>
             <h1>Minhas tarefas</h1>
 
-            <article className={styles.task}>
-              <div className={styles.tagContainer}>
-                <label className={styles.tag}>PÚBLICO</label>
-                <button className={styles.shareButton}>
-                  <FaShare size={20} color="#0866ff" />
-                </button>
-              </div>
+            {tasks.map((task) => (
+              <article className={styles.task} key={task.id}>
+                {task.public ? (
+                  <div className={styles.tagContainer}>
+                    <label className={styles.publicTag}>PÚBLICO</label>
+                    <button className={styles.shareButton}>
+                      <FaShare size={20} color="#0866ff" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className={styles.tagContainer}>
+                    <label className={styles.privateTag}>PRIVADO</label>
+                  </div>
+                )}
 
-              <div className={styles.taskContent}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                  architecto repudiandae exercitationem, incidunt a ut, sint
-                  recusandae, nemo temporibus quam quaerat magni officia eius
-                  vitae. Modi suscipit quam rerum delectus!
-                </p>
+                <div className={styles.taskContent}>
+                  <p>{task.task}</p>
 
-                <button className={styles.trashButton}>
-                  <FaTrash size={20} color="#ff4d4f" />
-                </button>
-              </div>
-            </article>
+                  <button className={styles.trashButton}>
+                    <FaTrash size={20} color="#ff4d4f" />
+                  </button>
+                </div>
+              </article>
+            ))}
           </section>
         </main>
       </div>

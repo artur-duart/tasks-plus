@@ -109,12 +109,20 @@
   gap: 8px;
 }
 
-.tag {
-  background-color: #0866ff;
+.publicTag,
+.privateTag {
   padding: 4px 8px;
   color: #fff;
   border-radius: 4px;
   font-size: 12px;
+}
+
+.publicTag {
+  background-color: #0866ff;
+}
+
+.privateTag {
+  background-color: #ff4d4f;
 }
 
 .shareButton,
