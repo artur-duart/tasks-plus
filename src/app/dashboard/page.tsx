@@ -12,8 +12,11 @@ import {
   orderBy,
   where,
   onSnapshot,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface TaskProps {
   id: string;
@@ -27,7 +30,6 @@ export default function Dashboard() {
   const [input, setInput] = useState("");
   const [publicTask, setPublicTask] = useState(false);
   const [tasks, setTasks] = useState<TaskProps[]>([]);
-
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -82,6 +84,19 @@ export default function Dashboard() {
     }
   }
 
+  async function handleDeleteTask(id: string) {
+    const docRef = doc(db, "tasks", id);
+    await deleteDoc(docRef);
+  }
+
+  async function handleShare(id: string) {
+    await navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_URL}/task/${id}`,
+    );
+
+    alert("URL copiada com sucesso!");
+  }
+
   return (
     <>
       <div className={styles.pageContainer}>
@@ -130,7 +145,10 @@ export default function Dashboard() {
                 {task.public ? (
                   <div className={styles.tagContainer}>
                     <label className={styles.publicTag}>PÚBLICO</label>
-                    <button className={styles.shareButton}>
+                    <button
+                      className={styles.shareButton}
+                      onClick={() => handleShare(task.id)}
+                    >
                       <FaShare size={20} color="#0866ff" />
                     </button>
                   </div>
@@ -141,9 +159,18 @@ export default function Dashboard() {
                 )}
 
                 <div className={styles.taskContent}>
-                  <p>{task.task}</p>
+                  {task.public ? (
+                    <Link href={`/tasks/${task.id}`}>
+                      <p>{task.task}</p>
+                    </Link>
+                  ) : (
+                    <p>{task.task}</p>
+                  )}
 
-                  <button className={styles.trashButton}>
+                  <button
+                    className={styles.trashButton}
+                    onClick={() => handleDeleteTask(task.id)}
+                  >
                     <FaTrash size={20} color="#ff4d4f" />
                   </button>
                 </div>
